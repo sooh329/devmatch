@@ -40,15 +40,4 @@ public class MyPageController {
         return "mypage/index";
     }
 
-    @PostMapping("/mypage/delete")
-    public String deleteAccount(@AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails == null) {
-            return "redirect:/login";
-        }
-
-        userService.deleteByUsername(userDetails.getUsername());
-
-        return "redirect:/logout"; // 로그아웃 처리
-    }
-
 }

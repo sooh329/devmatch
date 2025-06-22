@@ -6,11 +6,14 @@ import com.dongyang.devmatch.entity.User;
 import com.dongyang.devmatch.repository.UserRepository;
 import com.dongyang.devmatch.security.JwtTokenProvider;
 import com.dongyang.devmatch.service.AuthService;
+import com.dongyang.devmatch.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ public class AuthApiController {
 
     private final UserRepository userRepository;
     private final AuthService authService;
+    private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
@@ -83,5 +87,32 @@ public class AuthApiController {
         } else {
             return ResponseEntity.badRequest().body("이미 존재하는 사용자입니다.");
         }
+    }
+
+    // 회원 탈퇴 API
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteUser(HttpServletResponse response, @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        userService.deleteByUsername(userDetails.getUsername());
+
+        // JWT 쿠키 삭제 (만료)
+        ResponseCookie deleteCookie = ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
+
+        try {
+            response.sendRedirect("/");
+        } catch (IOException e) {
+            throw new RuntimeException("리다이렉트 실패", e);
+        }
+
+        return null;
     }
 }
