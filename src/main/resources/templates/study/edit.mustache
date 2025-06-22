@@ -1,0 +1,32 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h2>스터디 글 수정</h2>
+
+    <form action="/study/{{post.id}}/edit" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" required maxlength="100" value="{{post.title}}">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" rows="8" required>{{post.content}}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">지역 (선택)</label>
+            <input type="text" class="form-control" id="location" name="location" maxlength="50" value="{{post.location}}">
+        </div>
+
+        <div class="mb-3">
+            <label for="recruitCount" class="form-label">모집 인원 (선택)</label>
+            <input type="number" class="form-control" id="recruitCount" name="recruitCount" min="1" max="100" value="{{post.recruitCount}}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정 완료</button>
+        <a href="/study/{{post.id}}" class="btn btn-secondary">취소</a>
+    </form>
+</div>
+
+{{>layouts/footer}}

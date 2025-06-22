@@ -1,0 +1,24 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h2>팀 프로젝트 게시판</h2>
+    <a href="/project/new" class="btn btn-primary mb-3">새 글 작성</a>
+
+    {{#posts}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="/project/{{id}}">{{title}}</a>
+                </h5>
+                <p class="card-text text-truncate" style="max-height: 3em;">{{content}}</p>
+                <small class="text-muted">작성자: {{author.username}} | 작성일: {{createdAt}}</small>
+            </div>
+        </div>
+    {{/posts}}
+
+    {{^posts}}
+        <p>게시글이 없습니다.</p>
+    {{/posts}}
+</div>
+
+{{>layouts/footer}}

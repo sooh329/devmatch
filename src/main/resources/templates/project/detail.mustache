@@ -1,0 +1,48 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h2>{{post.title}}</h2>
+    <p><strong>작성자:</strong> {{post.author.username}}</p>
+    <p><strong>작성일:</strong> {{post.createdAt}}</p>
+    <hr>
+    <p style="white-space: pre-wrap;">{{post.content}}</p>
+    {{#post.location}}<p><strong>지역:</strong> {{post.location}}</p>{{/post.location}}
+    {{#post.recruitCount}}<p><strong>모집 인원:</strong> {{post.recruitCount}}명</p>{{/post.recruitCount}}
+
+    {{#loginUser}}
+        {{#isAuthor}}
+            <a href="/project/{{post.id}}/edit" class="btn btn-warning">수정</a>
+            <button class="btn btn-danger" onclick="deletePost({{post.id}})">삭제</button>
+        {{/isAuthor}}
+    {{/loginUser}}
+
+    <a href="/project" class="btn btn-secondary mt-3">목록으로</a>
+</div>
+
+<script>
+    async function deletePost(id) {
+        if (!confirm('정말 삭제하시겠습니까?')) return;
+
+        try {
+            const res = await fetch(`/api/project/${id}`, {
+                method: 'DELETE',
+                credentials: 'include' // JWT 쿠키 포함
+            });
+
+            if (res.ok) {
+                window.location.href = '/project';
+            } else if (res.status === 401) {
+                alert('로그인이 필요합니다.');
+                window.location.href = '/login';
+            } else if (res.status === 403) {
+                alert('삭제 권한이 없습니다.');
+            } else {
+                alert('삭제 실패');
+            }
+        } catch (err) {
+            alert('요청 실패: ' + err.message);
+        }
+    }
+</script>
+
+{{>layouts/footer}}

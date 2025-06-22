@@ -1,0 +1,49 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h2>마이페이지</h2>
+
+    <hr>
+
+    <h4>내가 쓴 스터디 게시글</h4>
+    {{#myStudyPosts}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="/study/{{id}}">{{title}}</a>
+                </h5>
+                <p class="card-text text-truncate" style="max-height: 3em;">{{content}}</p>
+                <small class="text-muted">작성일: {{createdAt}}</small>
+            </div>
+        </div>
+    {{/myStudyPosts}}
+    {{^myStudyPosts}}
+        <p>작성한 스터디 게시글이 없습니다.</p>
+    {{/myStudyPosts}}
+
+    <hr>
+
+    <h4>내가 쓴 프로젝트 게시글</h4>
+    {{#myProjectPosts}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="/project/{{id}}">{{title}}</a>
+                </h5>
+                <p class="card-text text-truncate" style="max-height: 3em;">{{content}}</p>
+                <small class="text-muted">작성일: {{createdAt}}</small>
+            </div>
+        </div>
+    {{/myProjectPosts}}
+    {{^myProjectPosts}}
+        <p>작성한 프로젝트 게시글이 없습니다.</p>
+    {{/myProjectPosts}}
+
+    <hr>
+
+    <form id="delete-form" method="post" action="/mypage/delete" onsubmit="return confirm('정말 탈퇴하시겠습니까? 되돌릴 수 없습니다.')">
+        <button class="btn btn-danger">회원 탈퇴</button>
+    </form>
+</div>
+
+{{>layouts/footer}}

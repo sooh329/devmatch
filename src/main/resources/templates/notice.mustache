@@ -1,0 +1,78 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <div class="card p-4">
+        <h2 class="mb-4 fw-bold"><i class="bi bi-info-circle-fill text-primary"></i> 이용 수칙 및 자주 묻는 질문</h2>
+
+        <div class="mb-5">
+            <h4 class="text-success"><i class="bi bi-check-circle-fill me-2"></i>커뮤니티 이용 수칙</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">✅ 타인을 존중하며 예의를 지켜주세요.</li>
+                <li class="list-group-item">🚫 욕설, 비방, 혐오 표현은 금지됩니다.</li>
+                <li class="list-group-item">🔍 중복 질문을 하기 전에 먼저 검색해 주세요.</li>
+                <li class="list-group-item">📢 광고성 게시물이나 홍보는 삼가 주세요.</li>
+                <li class="list-group-item">⚠️ 운영 방침을 어길 경우 경고 또는 이용 제한이 있을 수 있습니다.</li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="text-info"><i class="bi bi-question-circle-fill me-2"></i>자주 묻는 질문 (FAQ)</h4>
+
+            <div class="accordion mt-3" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                            Q. 게시글은 누가 작성할 수 있나요?
+                        </button>
+                    </h2>
+                    <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            A. 로그인한 사용자만 게시글을 작성할 수 있습니다.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                            Q. 글 수정이나 삭제는 어떻게 하나요?
+                        </button>
+                    </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            A. 본인이 작성한 글만 수정 및 삭제가 가능합니다.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                            Q. 질문에 답변을 달 수 있나요?
+                        </button>
+                    </h2>
+                    <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            A. 네, 다른 사용자의 질문에 자유롭게 댓글로 답변을 남기실 수 있습니다.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                            Q. 신고 기능은 없나요?
+                        </button>
+                    </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            A. 현재는 신고 기능이 없지만, 부적절한 내용은 운영자에게 문의해 주세요.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layouts/footer}}

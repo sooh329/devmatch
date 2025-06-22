@@ -1,0 +1,77 @@
+{{>layouts/header}}
+<div
+        class="d-flex flex-column justify-content-center align-items-center"
+        style="background-image: url('/images/MainDevMatchOpacity.png'); background-size: cover; background-position: center; width: 100%; height: 600px; margin-top: 5rem; margin-bottom: 10rem;"
+>
+    <div class="bg-white d-flex flex-column justify-content-center align-items-center rounded" style="width: 350px; height: 600px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <img src="/images/DevMatchLogo.png" alt="Logo" width="120px" style="margin-bottom: 30px"/>
+        <form class="d-flex flex-column justify-content-center align-items-center" style="margin-bottom: 10px" id="signupForm">
+            <div style="margin-bottom: 10px">
+                <label style="width: 80px; padding-right: 8px;">이메일:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div style="margin-bottom: 10px">
+                <label style="width: 80px; padding-right: 8px;">아이디:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div style="margin-bottom: 10px">
+                <label style="width: 80px; padding-right: 8px;">비밀번호:</label>
+                <input type="password" id="password"  name="password" required>
+            </div>
+            <div style="margin-bottom: 10px">
+                <label style="width: 80px; padding-right: 8px;">비밀번호 확인:</label>
+                <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+            </div>
+            {{#error}}
+                <p style="color:red">{{error}}</p>
+            {{/error}}
+            <button style="background-color: #0076D7; color: white; width: 270px;" type="submit" class="btn btn-primary">회원가입</button>
+        </form>
+
+        <a href="/login" class="ms-auto" style="margin-right: 45px">로그인</a>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('signupForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const passwordConfirm = document.getElementById('passwordConfirm').value.trim();
+
+        if (password !== passwordConfirm) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, username, password, passwordConfirm })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = errorText;
+                return;
+            }
+
+            // 회원가입 성공 시 로그인 페이지로 이동
+            window.location.href = '/login';
+
+        } catch (error) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = '서버 오류가 발생했습니다.';
+        }
+    });
+</script>
+
+{{>layouts/footer}}

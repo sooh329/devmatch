@@ -1,0 +1,24 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h2>{{post.title}}</h2>
+    <p><strong>작성자:</strong> {{post.author.username}}</p>
+    <p><strong>작성일:</strong> {{post.createdAt}}</p>
+    <hr>
+    <p style="white-space: pre-wrap;">{{post.content}}</p>
+    {{#post.location}}<p><strong>지역:</strong> {{post.location}}</p>{{/post.location}}
+    {{#post.recruitCount}}<p><strong>모집 인원:</strong> {{post.recruitCount}}명</p>{{/post.recruitCount}}
+
+    {{#loginUser}}
+        {{#isAuthor}}
+            <a href="/study/{{post.id}}/edit" class="btn btn-warning">수정</a>
+            <form action="/study/{{post.id}}/delete" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+            </form>
+        {{/isAuthor}}
+    {{/loginUser}}
+
+    <a href="/study" class="btn btn-secondary mt-3">목록으로</a>
+</div>
+
+{{>layouts/footer}}
